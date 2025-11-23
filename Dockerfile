@@ -10,7 +10,7 @@ USER root
 # Note: -k flag used due to build environment SSL certificate limitations
 RUN apt-get update && \
     apt-get install -y curl && \
-    DOCKER_VERSION=27.4.1 && \
+    DOCKER_VERSION=29.0.2 && \
     curl -fsSL -k "https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz" | \
     tar xzvf - --strip 1 -C /usr/local/bin docker/docker && \
     rm -rf /var/lib/apt/lists/*
@@ -18,7 +18,7 @@ RUN apt-get update && \
 # Install Supabase CLI directly from official GitHub releases
 # Using a specific version to ensure reproducibility
 # Note: -k flag used due to build environment SSL certificate limitations
-RUN SUPABASE_VERSION=1.200.3 && \
+RUN SUPABASE_VERSION=2.58.5 && \
     curl -fsSL -k "https://github.com/supabase/cli/releases/download/v${SUPABASE_VERSION}/supabase_linux_amd64.tar.gz" | \
     tar xzf - -C /usr/local/bin && \
     chmod +x /usr/local/bin/supabase
