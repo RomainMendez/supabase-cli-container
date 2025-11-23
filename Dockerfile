@@ -6,7 +6,8 @@ USER root
 
 # Install Docker CLI to communicate with Docker socket
 # This allows the container to talk to the host's Docker daemon
-# Using static binaries to avoid SSL certificate issues during build
+# Using static binaries from official Docker releases
+# Note: -k flag used due to build environment SSL certificate limitations
 RUN apt-get update && \
     apt-get install -y curl && \
     DOCKER_VERSION=27.4.1 && \
@@ -14,13 +15,13 @@ RUN apt-get update && \
     tar xzvf - --strip 1 -C /usr/local/bin docker/docker && \
     rm -rf /var/lib/apt/lists/*
 
-# Install Supabase CLI directly from GitHub releases
+# Install Supabase CLI directly from official GitHub releases
 # Using a specific version to ensure reproducibility
+# Note: -k flag used due to build environment SSL certificate limitations
 RUN SUPABASE_VERSION=1.200.3 && \
     curl -fsSL -k "https://github.com/supabase/cli/releases/download/v${SUPABASE_VERSION}/supabase_linux_amd64.tar.gz" | \
     tar xzf - -C /usr/local/bin && \
-    chmod +x /usr/local/bin/supabase && \
-    rm -rf /var/lib/apt/lists/*
+    chmod +x /usr/local/bin/supabase
 
 # Switch back to the linuxbrew user (default user in homebrew/brew image)
 USER linuxbrew
