@@ -10,7 +10,19 @@ Supabase CLI Container based on the official Homebrew Docker image (`homebrew/br
 - Boots into bash by default
 - Supports Docker socket pass-through for container management
 
-## Building
+## Installation
+
+### Pull from GitHub Container Registry (Recommended)
+
+The image is automatically built and published to GitHub Container Registry:
+
+```bash
+docker pull ghcr.io/romainmendez/supabase-cli-container:latest
+```
+
+### Building Locally
+
+Alternatively, you can build the image locally:
 
 ```bash
 docker build -t supabase-cli .
@@ -23,6 +35,12 @@ docker build -t supabase-cli .
 Run an interactive bash session:
 
 ```bash
+docker run -it --rm ghcr.io/romainmendez/supabase-cli-container:latest
+```
+
+Or if you built locally:
+
+```bash
 docker run -it --rm supabase-cli
 ```
 
@@ -31,7 +49,7 @@ docker run -it --rm supabase-cli
 To allow the container to communicate with your host's Docker daemon (for Supabase local development):
 
 ```bash
-docker run -it --rm --user root -v /var/run/docker.sock:/var/run/docker.sock supabase-cli
+docker run -it --rm --user root -v /var/run/docker.sock:/var/run/docker.sock ghcr.io/romainmendez/supabase-cli-container:latest
 ```
 
 **Note:** Running with `--user root` is needed for Docker socket access. Alternatively, you can:
@@ -42,16 +60,16 @@ docker run -it --rm --user root -v /var/run/docker.sock:/var/run/docker.sock sup
 
 ```bash
 # Check Supabase CLI version
-docker run --rm supabase-cli supabase --version
+docker run --rm ghcr.io/romainmendez/supabase-cli-container:latest supabase --version
 
 # Initialize a new Supabase project
-docker run -it --rm -v $(pwd):/workspace -w /workspace supabase-cli supabase init
+docker run -it --rm -v $(pwd):/workspace -w /workspace ghcr.io/romainmendez/supabase-cli-container:latest supabase init
 
 # Start Supabase locally (requires Docker socket)
 docker run -it --rm --user root \
   -v /var/run/docker.sock:/var/run/docker.sock \
   -v $(pwd):/workspace -w /workspace \
-  supabase-cli supabase start
+  ghcr.io/romainmendez/supabase-cli-container:latest supabase start
 ```
 
 ## What's Included
